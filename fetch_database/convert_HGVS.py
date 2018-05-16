@@ -3,6 +3,7 @@ import pandas as pd
 import argparse
 import hgvs.dataproviders.uta
 import hgvs.assemblymapper
+import re
 
 #hgvs_c = 'NM_001637.3:c.1582G>A'
 # deal with parameters
@@ -49,6 +50,33 @@ alt = []
 # load the input file
 df = pd.read_csv(inpf,sep='\t')
 for i in range(df.shape[0]):
+    # in case that the duplication length and refseq length doesn't match
+    # just skip those variants
+    if 'dup' in df['Nucleotide_Change'][i]:
+        pat = ':c.(\d+_\d+)'+'dup'+'(\S+)'
+        matched = re.search(pat,df['Nucleotide_Change'][i])
+        # started position annotated
+        if matched:
+            pos_int = matched.group(1)
+            length = int(re.split('_',pos_int)[1]) - int(re.split('_',pos_int)[0])
+	    if length != len(matched.group(2)):
+                pos.append(0)
+                ref.append('')
+                alt.append('')
+                continue
+    if 'del' in df['Nucleotide_Change'][i]:
+        pat = ':c.(\d+_\d+)'+'del'+'(\S+)'
+        matched = re.search(pat,df['Nucleotide_Change'][i])
+        if matched:
+            # started position annotated
+            pos_int = matched.group(1)
+            length = int(re.split('_',pos_int)[1]) - int(re.split('_',pos_int)[0])
+            if length != len(matched.group(2)):
+                pos.append(0)
+                ref.append('')
+                alt.append('')
+                continue
+ 
     start,ref_tmp,alt_tmp = parse_hgvs_cdna(df['Nucleotide_Change'][i],am)
     pos.append(start)
     ref.append(ref_tmp)

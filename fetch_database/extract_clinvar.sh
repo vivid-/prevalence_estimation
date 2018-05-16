@@ -7,3 +7,5 @@ chr="$1"
 sta="$2"
 end="$3"
 tabix clinvar_20180429.vcf.gz ${chr}:${sta}-${end} > clinvar_${chr}_${sta}-${end}.vcf
+Rscript extract_patho_annotation.R clinvar_${chr}_${sta}-${end}.vcf clinvar_${chr}_${sta}-${end}_info.table
+
