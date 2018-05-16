@@ -50,8 +50,8 @@ exome_file <- args[7]
 output_file <- args[8]
 genome <- read.table(genome_file,header=T,sep="\t")
 exome <- read.table(exome_file,header=T,sep="\t")
-colnames(genome) <- c("CHROM","POS","ID","REF","ALT","QUAL.genome","FILTER.genome","Allele.Count.genome","Allele.Number.genome","Allele.Frequency.genome","AC_FIN.genome","AC_NFE.genome","AN_FIN.genome","AN_NFE.genome","Annotation.genome")
-colnames(exome) <- c("CHROM","POS","ID","REF","ALT","QUAL.exome","FILTER.exome","Allele.Count.exome","Allele.Number.exome","Allele.Frequency.exome","AC_FIN.exome","AC_NFE.exome","AN_FIN.exome","AN_NFE.exome","Annotation.exome")
+colnames(genome) <- c("CHROM","POS","ID.genome","REF","ALT","QUAL.genome","FILTER.genome","Allele.Count.genome","Allele.Number.genome","Allele.Frequency.genome","AC_FIN.genome","AC_NFE.genome","AN_FIN.genome","AN_NFE.genome","Annotation.genome")
+colnames(exome) <- c("CHROM","POS","ID.exome","REF","ALT","QUAL.exome","FILTER.exome","Allele.Count.exome","Allele.Number.exome","Allele.Frequency.exome","AC_FIN.exome","AC_NFE.exome","AN_FIN.exome","AN_NFE.exome","Annotation.exome")
 result <- merge.alleleFreq(genome,exome)
 
 write.table(result,file=output_file,col.names=T,row.names=F,sep="\t",quote=F)
