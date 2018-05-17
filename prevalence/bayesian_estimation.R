@@ -6,7 +6,7 @@
 ###################################
 
 library(plyr)
-library("openxlsx")
+#library("openxlsx")
 
 # estimate the mean of AF posterior distribution
 pre_w_v_plugged <- function(v,w,n,x){
@@ -46,29 +46,6 @@ get_var_normal <- function(vs,ws){
 ############# use chi square distribution to approximate the squared sum of beta r.v.s ############
 ###################################################################################################
 
-# get the value of Marcum Q-function for CDF
-get_marcum_q_func <- function(M,a,b,thresh){
-  tmp.1 = exp(-0.5*a^2)
-  max_num = 1000
-  tmp.sum = 0
-  for(k in 0:max_num){
-    tmp.2 = (0.5*a^2)^k
-    tmp.3 = gamma(M+k) -gamma(0.5*b^2)
-    tmp.4 = gamma(M+k)
-    tmp.5 = factorial(k)
-    
-    tmp.now = tmp.1*tmp.2/tmp.4 *(tmp.3/tmp.5)
-    cat(tmp.now,"\n")
-    if(abs(tmp.now)>thresh){
-      tmp.sum = tmp.sum + tmp.now
-    }else{
-      return(1-tmp.sum)
-    }
-    
-  }
-  
-  return(1-tmp.sum)
-}
 
 # get the noncentral parameter for- the approximated chi-square distribution
 get_noncentral_param <- function(mu,sigma){
@@ -85,54 +62,64 @@ get_posterior_w_v <- function(x,n,w,v){
 
 options(stringsAsFactors = F)
 args <- commandArgs()
-input.file <- args[6]
+input.file <- args[6] # input file for AF and also patheogenic annotation
 param.file <- args[7]
+population <- args[8] # specify the interested population, NFE (Non_Finish_European),FIN (Finish),European,All
 params <- read.table(param.file,header=T)
-af_file <- args[8] # input file for the allele frequency
-patho_file <- args[9] # input file for patheogenecity annotation
-#library("openxlsx")
-af.table <- read.table(af_file,header = T,stringsAsFactors=F,fill = T,sep="\t")
-types = c("frameshift_variant","splice_acceptor_variant","splice_donor_variant","missense_variant","stop_gained")
-type_names = c("frameshift","splice acceptor","splice donor","missense","stop gained")
 
-dat.1 <- read.table(patho_file,header = T,stringsAsFactors=F,fill = T,sep="\t")
-dat.patheo <- dat.1[which(patheo.info==1),]
-all.df <- merge(x=dat.patheo,y=af.table,
-                by.x = c("Chrom","Position","Reference","Alternate"),
-                by.y = c("CHROM","POS","REF","ALT"),all.x = T)
+# read the input file
+df <- read.table(input.file,header=T,sep="\t")
+
+
+types = c("frameshift_variant","splice_acceptor_variant","splice_donor_variant","missense_variant","stop_gained")
+#type_names = c("frameshift","splice acceptor","splice donor","missense","stop gained")
+
+# only focused on the variants annotated as pathogenic
+all.df <- df[which(df$patheo.info==1),]
+
 
 # deal with NAs for AC or AN columns
-all.df$AC_FIN.x[which(is.na(all.df$AC_FIN.x))] = 0
-all.df$AN_FIN.x[which(is.na(all.df$AN_FIN.x))] = 0
-all.df$AC_FIN.y[which(is.na(all.df$AC_FIN.y))] = 0
-all.df$AN_FIN.y[which(is.na(all.df$AN_FIN.y))] = 0
+all.df$AC_FIN.genome[which(is.na(all.df$AC_FIN.genome))] = 0
+all.df$AN_FIN.genome[which(is.na(all.df$AN_FIN.genome))] = 0
+all.df$AC_FIN.exome[which(is.na(all.df$AC_FIN.exome))] = 0
+all.df$AN_FIN.exome[which(is.na(all.df$AN_FIN.exome))] = 0
 
-all.df$AC_NFE.x[which(is.na(all.df$AC_NFE.x))] = 0
-all.df$AN_NFE.x[which(is.na(all.df$AN_NFE.x))] = 0
-all.df$AC_NFE.y[which(is.na(all.df$AC_NFE.y))] = 0
-all.df$AN_NFE.y[which(is.na(all.df$AN_NFE.y))] = 0
-
-##########
-# remove the NAs in the matched af.table
-all.df <- all.df[-which(is.na(all.df[,47])),]
+all.df$AC_NFE.genome[which(is.na(all.df$AC_NFE.genome))] = 0
+all.df$AN_NFE.genome[which(is.na(all.df$AN_NFE.genome))] = 0
+all.df$AC_NFE.exome[which(is.na(all.df$AC_NFE.exome))] = 0
+all.df$AN_NFE.exome[which(is.na(all.df$AN_NFE.exome))] = 0
 
 ##########
-# ! should add an input argument here to see which column/population they want to estimate
+
+##########
+# for different population, find the corresponding AF and AN column
+if(population == "FIN"){
+	AC_interested <- all.df$AC_FIN.exome + all.df$AC_FIN.genome
+        AN_interested <- all.df$AN_FIN.exome + all.df$AN_FIN.genome
+}
+if(population == "NFE"){
+	AC_interested <- all.df$AC_NFE.exome + all.df$AC_NFE.genome
+	AN_interested <- all.df$AN_NFE.exome + all.df$AN_NFE.genome
+}
+if(population == "EUR"){
+	AC_interested <- all.df$AC_FIN.exome + all.df$AC_FIN.genome + all.df$AC_NFE.exome + all.df$AC_NFE.genome
+        AN_interested <- all.df$AN_FIN.exome + all.df$AN_FIN.genome + all.df$AN_NFE.exome + all.df$AN_NFE.genome
+}
+if(population == "All"){
+	AC_interested <- all.df$Allele.Count
+	AN_interested <- all.df$Allele.Number
+}
+
 
 af_changed <- rep(0,dim(all.df)[1])
 posterior_param <- data.frame(v=rep(0,dim(all.df)[1]),w=rep(0,dim(all.df)[1]))
 for(i in 1:length(types)){
-  ind.tmp <- which(all.df$Annotation==type_names[i])
+  ind.tmp <- grep(types[i],all.df$Annotation)
   v = params$v[which(params$type==types[i])]
   w = params$w[which(params$type==types[i])]
- # ac= all.df[ind.tmp,45]
-#  an = all.df[ind.tmp,46]
-  ac = all.df$AC_NFE.x[ind.tmp] + all.df$AC_NFE.y[ind.tmp]+all.df$AC_FIN.x[ind.tmp] + all.df$AC_FIN.y[ind.tmp]
-  an = all.df$AN_NFE.x[ind.tmp] + all.df$AN_NFE.y[ind.tmp]+ all.df$AN_FIN.x[ind.tmp] + all.df$AN_FIN.y[ind.tmp]
-#  ac = all.df$AC_FIN.x[ind.tmp] + all.df$AC_FIN.y[ind.tmp]
-#  an = all.df$AN_FIN.x[ind.tmp] + all.df$AN_FIN.y[ind.tmp]
-#  ac = all.df$Allele.Count.European..Non.Finnish.[ind.tmp]#+all.df$Allele.Count.European..Finnish.[ind.tmp]
-#  an = all.df$Allele.Number.European..Non.Finnish.[ind.tmp]#+all.df$Allele.Number.European..Finnish.[ind.tmp]
+  ac = AC_interested[ind.tmp]
+  an = AN_interested[ind.tmp]
+
   post_params <- get_posterior_w_v(ac,an/2,w,v)
   posterior_param[ind.tmp,1]<- post_params[[1]]
   posterior_param[ind.tmp,2]<- post_params[[2]]
@@ -140,6 +127,26 @@ for(i in 1:length(types)){
   af_changed[ind.tmp] <- af_changed_tmp
 }
 
+
+mu <- get_mean_normal(posterior_param$v[which(posterior_param$w!=0)],posterior_param$w[which(posterior_param$w!=0)])
+sigma.2 <- get_var_normal(posterior_param$v[which(posterior_param$w!=0)],posterior_param$w[which(posterior_param$w!=0)])
+# get the estimates
+E.s.2 = mu^2 + sigma.2
+prev.estimated =  E.s.2
+
+# get the confidence interval
+confidence <- args[9]
+alpha = 1 - as.numeric(confidence)
+# lower bound
+lb <- qchisq(alpha/2,1,ncp = mu^2/sigma.2)*sigma.2
+# upper bound
+up <- qchisq(1-alpha/2,1,ncp = mu^2/sigma.2)*sigma.2
+
+# output the result
+output_file <- args[10] # destination for output
+sink(output_file)
+cat("estimated prevalence: ",prev.estimated,"\n")
+cat("confidence interval with ",as.numeric(confidence)*100,"% cofidence: ",lb,"-",up,"\n")
 
 
 

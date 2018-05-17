@@ -9,6 +9,7 @@ args <- commandArgs()
 mutation_file <- args[6]
 af_file <- args[7]
 output_file <- args[8]
+#cat(mutation_file_file)
 
 options(stringsAsFactors=F)
 # read the mutation database annotation file
@@ -16,7 +17,7 @@ mutation <- read.table(mutation_file,header=T,sep="\t")
 # read the AF file
 af <- read.table(af_file,header=T,sep="\t")
 # merge the mutation database annotation file and AF file
-all.join <- merge(x = dat1, y = dat2,
+all.join <- merge(x = mutation, y = af,
                   by = c("POS","REF","ALT"),
                   all = TRUE)
 

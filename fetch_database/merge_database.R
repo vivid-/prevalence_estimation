@@ -15,7 +15,12 @@ options(stringsAsFactors=F)
 clinvar <- read.table(clinvar_file,header=T,sep="\t")
 egl <- read.table(egl_file,header=T,sep="\t")
 colnames(clinvar) <- c("Chrom","POS","ID","REF","ALT","QUAL","FILTER","CLNDN.clinvar","MC.clinvar","CLINDISDB.clinvar","sig.clinvar")
+clinvar$POS = as.numeric(clinvar$POS)
 colnames(egl) <- c("Order","Gene","Exon","Nucleotide_Change.emory","Protein_Change.emory","Alias_Listing.emory","sig.emory","Last_Reviewed.emory","POS","REF","ALT")
+egl$POS = as.numeric(egl$POS)
+
+# remove variants that have conflicting information in Emory database
+egl <- egl[which(egl$POS!=0),]
 
 # merge two dataframes
 all.join <- merge(x=clinvar, y=egl,
