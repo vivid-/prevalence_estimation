@@ -1,9 +1,8 @@
 #!/usr/bin/R
 
-####################################################
-## this script is used to estimate the parameters ##
-## in the categorized beta distribution ############
-####################################################
+########################################################
+## this script is used to categorize variants in ExAC ##
+########################################################
 options(stingsAsFactos=F)
 args <- commandArgs()
 
