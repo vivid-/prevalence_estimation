@@ -60,7 +60,7 @@ filter.variant <- function(df,databases,alle.frq.coln){
   ### mutation databases
   idc.common = which(df[,idx.alle.frq]>0.0005)
   
-  idc.patheo = variant.annotated(df,idc.mutation.db,databases,3)
+  idc.patheo = variant.annotated(df,idc.mutation.db,databases,1)
   idc.common.annotated = intersect(idc.common,idc.patheo)
   # df.annotated = df[idc.filtered,]
   # cat(83%in%idc.patheo)
@@ -86,11 +86,16 @@ annot.var <- function(df,databases,alle.frq.coln,annotation.coln){
   frms.idx <- grep("frameshift",df.filtered[,annotat.idx])
   patheo.idx.1 <- c(nonss.idx,splc.acp.idx,splc.dn.idx,frms.idx) # indices in the idc.filtered
   
-  df.left = df.filtered[-patheo.idx.1,]
-  idx.left <- idc.filtered[-patheo.idx.1]
+  if(length(patheo.idx.1)==0){
+	df.left = df.filtered
+	idx.left <- idc.filtered
+  }else{
+  	df.left = df.filtered[-patheo.idx.1,]
+ 	idx.left <- idc.filtered[-patheo.idx.1]
+  }
   idc.mutation.db <- match(databases,colnames(df))
   ## extract variants with more than 2 mutation databases annotated ##
-  annot.idx <- variant.annotated(df.left, idc.mutation.db,databases,2)
+  annot.idx <- variant.annotated(df.left, idc.mutation.db,databases,1)
     
   ## indices of identified patheogenic variants in the original df
   patheo.idc <- c(idx.left[annot.idx],idc.filtered[patheo.idx.1])
@@ -101,6 +106,7 @@ annot.var <- function(df,databases,alle.frq.coln,annotation.coln){
   return(patheogenic)
   
 }
+
 
 
 

@@ -5,6 +5,7 @@ import hgvs.dataproviders.uta
 import hgvs.assemblymapper
 import re
 import sys
+import pickle
 
 #hgvs_c = 'NM_001637.3:c.1582G>A'
 # deal with parameters
@@ -54,6 +55,9 @@ hdp=hgvs.dataproviders.uta.connect()
 am = hgvs.assemblymapper.AssemblyMapper(hdp,
     assembly_name='GRCh37', alt_aln_method='splign',
     replace_reference=True)
+# store the two objects above for later usage
+#filehandler = open('GRCh37_am', 'w') 
+#pickle.dump([hdp,am], filehandler)
 
 pos = []
 ref = []
@@ -83,7 +87,7 @@ for i in df.index.tolist():
                 continue
     if 'del' in df['Nucleotide_Change'][i]:
         pat = ':c.(\d+_\d+)'+'del'+'(\S+)'
-        matched = re.search(pat,df.iloc[i]['Nucleotide_Change'])
+        matched = re.search(pat,df['Nucleotide_Change'][i])
         if matched:
             # started position annotated
             pos_int = matched.group(1)

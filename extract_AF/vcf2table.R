@@ -52,7 +52,7 @@ extract.infor <- function(info.col,values){
 }
 
 
-table <- read.table(args[6],header=F,stringsAsFactors=F)
+data <- read.table(args[6],header=F,stringsAsFactors=F)
 # information that we want to extract
 values <- c("AC","AN","AF","AC_FIN","AC_NFE","AN_FIN","AN_NFE","Annotation")
 info <- extract.infor(data[,8],values)
