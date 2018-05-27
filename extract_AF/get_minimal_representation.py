@@ -1,5 +1,6 @@
 #!/usr/bin/pythom
 import pandas as pd
+import math
 import argparse
 ########################################################
 ## this script is used to get the mini representation ##
@@ -38,6 +39,9 @@ vcf = pd.read_csv(input_file,sep='\t')
 
 # get minimal represented pos ref and alt
 for i in range(vcf.shape[0]):
+    #print(i)
+    if isinstance(vcf['REF'][i],float) or isinstance(vcf['ALT'][i],float):
+        continue
     pos_updated, ref_updated, alt_updated = get_minimal_representation(vcf['POS'][i], vcf['REF'][i], vcf['ALT'][i])
     vcf.loc[i,'POS'] = pos_updated 
     vcf.loc[i,'REF'] = ref_updated

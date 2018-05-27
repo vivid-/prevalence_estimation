@@ -1,4 +1,4 @@
-# prevalence_estimation
+# Estimating prevalences for monogenic autosomic recessive diseases
 Complete version of prevalence estimation
 
 ## Downlad pathogenicity annotation from mutation database
@@ -28,6 +28,11 @@ Merge two database files
 Rscript ./fetch_database/merge_database.R [clinvar_file] [EGL_file] [database_output]
 ## for example:
 Rscript ./fetch_database/merge_database.R clinvar2_71680852-71913898_DYSF_info.table DYSF_EGL_loc.txt DYSF_mutation.txt
+
+# getting the minirepresentational reference alleles and alternative alleles
+python ./extract_AF/get_minimal_representation.py --INPUT [database_output] --OUTPUT [database_miniRepresented_output]
+## for example:
+python ./extract_AF/get_minimal_representation.py --INPUT DYSF_mutation.txt DYSF_mutation_miniR.txt
 ```
 
 ## Download allele frequency files for genes of interests
@@ -40,7 +45,7 @@ sh ./extract_AF/bash_pre.sh 2 71680852 71913898 DYSF
 # merge AF files with mutation files
 Rscript ./extract_AF/merge_mutation_AF.R [database_output] [AF_output] [merged_database_AF]
 ## for example:
-Rscript ./extract_AF/merge_mutation_AF.R DYSF_mutation.txt gnomad.genomes_exomes.r2.0.2.sites_2.71680852-71913898_DYSF_splitted_miniRepresented.table DYSF_mutation_AF.txt
+Rscript ./extract_AF/merge_mutation_AF.R DYSF_mutation_miniR.txt gnomad.genomes_exomes.r2.0.2.sites_2.71680852-71913898_DYSF_splitted_miniRepresented.table DYSF_mutation_AF.txt
 ```
 
 ## Estimate beta paramters for AF priors
