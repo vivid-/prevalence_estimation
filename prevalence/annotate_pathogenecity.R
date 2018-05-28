@@ -15,7 +15,8 @@ variant.annotated <- function(df, idc.mutation.db,databases,X){
   annotated.times <- rep(0,dim(df)[1])
   for(i in 1:length(idc.mutation.db)){
     
-      idc.tmp <- grep("Pathogenic",df[,idc.mutation.db[i]],ignore.case = T)
+      #idc.tmp <- grep("Pathogenic",df[,idc.mutation.db[i]],ignore.case = T)
+      idc.tmp <- which(df[,idc.mutation.db[i]] == "Pathogenic")
       if(X==3){
         idc.tmp.1 <- grep("likely Pathogenic",df[,idc.mutation.db[i]],ignore.case = T)
         idc.tmp <- setdiff(idc.tmp,idc.tmp.1)
