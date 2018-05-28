@@ -19,8 +19,8 @@ vcf_parser ./data/gnomad.exomes.r2.0.2.sites_${chr}.${sta}-${end}_${gene}.vcf --
 vcf_parser ./data/gnomad.genomes.r2.0.2.sites_${chr}.${sta}-${end}_${gene}.vcf --split -o ./data/gnomad.genomes.r2.0.2.sites_${chr}.${sta}-${end}_${gene}_splitted.vcf
 
 # 4. vcf2table
-Rscript vcf2table.R ./data/gnomad.exomes.r2.0.2.sites_${chr}.${sta}-${end}_${gene}_splitted.vcf ./data/gnomad.exomes.r2.0.2.sites_${chr}.${sta}-${end}_${gene}_splitted.table
-Rscript vcf2table.R ./data/gnomad.genomes.r2.0.2.sites_${chr}.${sta}-${end}_${gene}_splitted.vcf ./data/gnomad.genomes.r2.0.2.sites_${chr}.${sta}-${end}_${gene}_splitted.table
+Rscript vcf2table.R ./data/gnomad.exomes.r2.0.2.sites_${chr}.${sta}-${end}_${gene}_splitted.vcf ${gene} ./data/gnomad.exomes.r2.0.2.sites_${chr}.${sta}-${end}_${gene}_splitted.table 
+Rscript vcf2table.R ./data/gnomad.genomes.r2.0.2.sites_${chr}.${sta}-${end}_${gene}_splitted.vcf ${gene} ./data/gnomad.genomes.r2.0.2.sites_${chr}.${sta}-${end}_${gene}_splitted.table
 
 # 5. mini represent vcf information
 python get_minimal_representation.py --INPUT ./data/gnomad.exomes.r2.0.2.sites_${chr}.${sta}-${end}_${gene}_splitted.table --OUTPUT ./data/gnomad.exomes.r2.0.2.sites_${chr}.${sta}-${end}_${gene}_splitted_miniRepresented.table
