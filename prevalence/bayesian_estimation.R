@@ -149,4 +149,3 @@ cat("estimated prevalence: ",prev.estimated,"\n")
 cat("confidence interval with ",as.numeric(confidence)*100,"% cofidence: ",lb,"-",up,"\n")
 
 
-
