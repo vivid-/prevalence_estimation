@@ -1,2 +1,0 @@
-estimated prevalence:  0 
-confidence interval with  5 % cofidence:  NaN - NaN 
