@@ -5,12 +5,12 @@ Complete version of prevalence estimation
 We are using `R version 3.4.1` and `python 2.7.11` here. 
 For R, `plyr` library is required, which can be installed via 
 ``` R
-install.packages("plyr")
+> install.packages("plyr")
 ```
 
 For python, you can install all required libraries using the command line
 ``` bash
-pip install -r requirements.txt
+$ pip install -r requirements.txt
 ```
 
 Besides, you need to have [tabix](http://wiki.wubrowse.org/How_to_install_tabix) installed beforehand.  
