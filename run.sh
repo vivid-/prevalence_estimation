@@ -7,7 +7,8 @@ cfs=$5
 
 
 # Downlad pathogenicity annotation from mutation database
-
+mkdir ./result
+mkdir ./data
 ## For EGL database
 ### download the database for this gene
 python ./fetch_database/extract_EGL.py --gene ${gene} --out ./data/${gene}_EGL.txt
@@ -52,10 +53,10 @@ Rscript ./prior_estimation/get_beta_parameters.R ExAC.r0.3.1.sites.vep.canonical
 Rscript ./prevalence/annotate_pathogenecity.R ./data/${gene}_mutation_AF.txt ./data/${gene}_mutation_AF_patho.txt
 
 ## calculate the prevalence
-Rscript ./prevalence/bayesian_estimation.R ./data/${gene}_mutation_AF_patho.txt ./data/ExAC_beta_priors.txt All ${cfs} All ${gene}_All_${cfs}.txt
-Rscript ./prevalence/bayesian_estimation.R ./data/${gene}_mutation_AF_patho.txt ./data/ExAC_beta_priors.txt All ${cfs} NFE ${gene}_NFE_${cfs}.txt
-Rscript ./prevalence/bayesian_estimation.R ./data/${gene}_mutation_AF_patho.txt ./data/ExAC_beta_priors.txt All ${cfs} FIN ${gene}_FIN_${cfs}.txt
-Rscript ./prevalence/bayesian_estimation.R ./data/${gene}_mutation_AF_patho.txt ./data/ExAC_beta_priors.txt All ${cfs} EUR ${gene}_EUR_${cfs}.txt
+Rscript ./prevalence/bayesian_estimation.R ./data/${gene}_mutation_AF_patho.txt ./data/ExAC_beta_priors.txt All ${cfs} All ./result/${gene}_All_${cfs}.txt
+Rscript ./prevalence/bayesian_estimation.R ./data/${gene}_mutation_AF_patho.txt ./data/ExAC_beta_priors.txt All ${cfs} NFE ./result/${gene}_NFE_${cfs}.txt
+Rscript ./prevalence/bayesian_estimation.R ./data/${gene}_mutation_AF_patho.txt ./data/ExAC_beta_priors.txt All ${cfs} FIN ./result/${gene}_FIN_${cfs}.txt
+Rscript ./prevalence/bayesian_estimation.R ./data/${gene}_mutation_AF_patho.txt ./data/ExAC_beta_priors.txt All ${cfs} EUR ./result/${gene}_EUR_${cfs}.txt
 
 
 

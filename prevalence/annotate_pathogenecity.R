@@ -35,6 +35,12 @@ variant.annotated <- function(df, idc.mutation.db,databases,X){
         idc.tmp = intersect(idc.tmp,tmp.idc)
       }
       
+      if(databases[i] == "PHRED"){
+        idx.info <- which(colnames(df) == "PHRED")
+        tmp.idc = which(as.numeric(df[,idx.info])>20)
+        idc.tmp = intersect(idc.tmp,tmp.idc)
+      }
+
     annotated.times[idc.tmp] <- annotated.times[idc.tmp]+1
   }
   
@@ -129,7 +135,7 @@ Annotation <- annotation[-which(is.na(allele.freq))]
 dat.noNa <- cbind(dat.noNa,Annotation)
 
 #### extract patheogenic variants ########
-databases = c("sig.emory","sig.clinvar")
+databases = c("sig.emory","sig.clinvar","PHRED")
 frq.coln = "AF"
 annotation.coln = "Annotation"
 patheo.info <- annot.var(dat.noNa,databases = databases,alle.frq.coln = frq.coln,annotation.coln = annotation.coln)
