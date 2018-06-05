@@ -1,0 +1,2 @@
+estimated prevalence:  3.154622e-06 
+confidence interval with  95 % cofidence:  2.28628e-06 - 4.122318e-06 
