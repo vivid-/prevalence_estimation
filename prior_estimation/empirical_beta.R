@@ -32,8 +32,8 @@ dat.passed <- dat[dat$FILTER=="PASS",]
 
 result_predix <- args[7]
 #result_predix <- "/ysm-gpfs/scratch60/wl382/WES/Data/ExAC/ExAC.r0.3.1.sites.vep.canonical"
-#types <- c("frameshift_variant","splice_acceptor_variant","splice_donor_variant","stop_gained","missense_variant","exon_variant","UTR_variant","other_variant")
-types <- c("other_variant")
+types <- c("frameshift_variant","splice_acceptor_variant","splice_donor_variant","stop_gained","missense_variant","exon_variant","UTR_variant","other_variant")
+#types <- c("other_variant")
 for(type in types){
 	dat.tmp <- dat.passed[categorize_varaints(dat.passed,type,types),]
 	# extract AC and AN #

@@ -20,8 +20,8 @@ empiri.parameters<- function(ACs,ANs){
 	return(params)
 }
 result <- data.frame()
-types <- c("frameshift_variant","splice_acceptor_variant","splice_donor_variant","stop_gained","missense_variant")
-
+#types <- c("frameshift_variant","splice_acceptor_variant","splice_donor_variant","stop_gained","missense_variant")
+types <-  c("frameshift_variant","splice_acceptor_variant","splice_donor_variant","stop_gained","missense_variant","exon_variant","UTR_variant","other_variant")
 input_predix <- args[6]
 output <- args[7]
 for(type in types){
