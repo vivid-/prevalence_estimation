@@ -43,7 +43,7 @@ wget ftp://ftp.broadinstitute.org/pub/ExAC_release/release1/manuscript_data/ExAC
 wget ftp://ftp.broadinstitute.org/pub/ExAC_release/release1/manuscript_data/ExAC.r1.sites.vep.canonical.table.gz.tbi
 Rscript ./prior_estimation/empirical_beta.R ExAC.r0.3.1.sites.vep.canonical.table.gz ExAC.r0.3.1.sites.vep.canonical
 ## get the estimated beta priors for each category
-Rscript ./prior_estimation/get_beta_parameters.R ExAC.r0.3.1.sites.vep.canonical ./data/ExAC_beta_priors.txt 
+Rscript ./prior_estimation/get_beta_parameters.R ExAC.r0.3.1.sites.vep.canonical_ ./data/ExAC_beta_priors.txt 
 
 
 ##########################################################################################################################################
