@@ -5,10 +5,19 @@ end=$3
 gene=$4
 
 # 1. download the WGS and WES files from gnomAD
-#wget https://storage.googleapis.com/gnomad-public/release/2.0.2/vcf/exomes/gnomad.exomes.r2.0.2.sites.vcf.bgz
-#wget https://storage.googleapis.com/gnomad-public/release/2.0.2/vcf/exomes/gnomad.exomes.r2.0.2.sites.vcf.bgz.tbi
-wget https://storage.googleapis.com/gnomad-public/release/2.0.2/vcf/genomes/gnomad.genomes.r2.0.2.sites.chr${chr}.vcf.bgz
-wget https://storage.googleapis.com/gnomad-public/release/2.0.2/vcf/genomes/gnomad.genomes.r2.0.2.sites.chr${chr}.vcf.bgz.tbi
+if [ ! -f gnomad.exomes.r2.0.2.sites.vcf.bgz ]; then
+    wget https://storage.googleapis.com/gnomad-public/release/2.0.2/vcf/exomes/gnomad.exomes.r2.0.2.sites.vcf.bgz
+fi
+if [ ! -f gnomad.exomes.r2.0.2.sites.vcf.bgz.tbi ]; then
+    wget https://storage.googleapis.com/gnomad-public/release/2.0.2/vcf/exomes/gnomad.exomes.r2.0.2.sites.vcf.bgz.tbi
+fi
+if [ ! -f gnomad.genomes.r2.0.2.sites.chr${chr}.vcf.bgz ]; then
+    wget https://storage.googleapis.com/gnomad-public/release/2.0.2/vcf/genomes/gnomad.genomes.r2.0.2.sites.chr${chr}.vcf.bgz
+fi
+if [ ! -f gnomad.genomes.r2.0.2.sites.chr${chr}.vcf.bgz.tbi ]; then
+    wget https://storage.googleapis.com/gnomad-public/release/2.0.2/vcf/genomes/gnomad.genomes.r2.0.2.sites.chr${chr}.vcf.bgz.tbi
+fi
+
 
 # 2. retrieve WGS and WES based on their genomic coordinates
 tabix -fh gnomad.exomes.r2.0.2.sites.vcf.bgz ${chr}:${sta}-${end} > ../data/gnomad.exomes.r2.0.2.sites_${chr}.${sta}-${end}_${gene}.vcf
