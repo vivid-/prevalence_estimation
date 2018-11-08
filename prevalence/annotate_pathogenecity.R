@@ -135,7 +135,7 @@ Annotation <- annotation[-which(is.na(allele.freq))]
 dat.noNa <- cbind(dat.noNa,Annotation)
 
 #### extract patheogenic variants ########
-databases = c("sig.emory","sig.clinvar","PHRED")
+databases = c("sig.emory","sig.clinvar")
 frq.coln = "AF"
 annotation.coln = "Annotation"
 patheo.info <- annot.var(dat.noNa,databases = databases,alle.frq.coln = frq.coln,annotation.coln = annotation.coln)
