@@ -4,7 +4,7 @@ end=$3
 gene=$4
 # confidence score
 cfs=$5
-clinvar=$6
+clinvar=$6 # like clinvar_20181028
 
 # Downlad pathogenicity annotation from mutation database
 mkdir ./result
