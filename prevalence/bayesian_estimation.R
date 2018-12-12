@@ -71,7 +71,7 @@ params <- read.table(param.file,header=T)
 df <- read.table(input.file,header=T,sep="\t")
 
 
-types = c("frameshift_variant","splice_acceptor_variant","splice_donor_variant","missense_variant","stop_gained")
+types = c("frameshift_variant","splice_acceptor_variant","splice_donor_variant","missense_variant","stop_gained","exon_variant","UTR_variant","other_variant")
 #type_names = c("frameshift","splice acceptor","splice donor","missense","stop gained")
 
 # only focused on the variants annotated as pathogenic
@@ -113,8 +113,10 @@ if(population == "All"){
 
 af_changed <- rep(0,dim(all.df)[1])
 posterior_param <- data.frame(v=rep(0,dim(all.df)[1]),w=rep(0,dim(all.df)[1]))
+inds_updated <- c()
 for(i in 1:length(types)){
   ind.tmp <- grep(types[i],all.df$Annotation)
+  inds_updated <- c(inds_updated,ind.tmp)
   v = params$v[which(params$type==types[i])]
   w = params$w[which(params$type==types[i])]
   ac = AC_interested[ind.tmp]
@@ -126,6 +128,19 @@ for(i in 1:length(types)){
   af_changed_tmp <- pre_w_v_plugged(v,w,an/2,ac)
   af_changed[ind.tmp] <- af_changed_tmp
 }
+
+# consider the other variant for varint type not included
+ind.tmp = setdiff(1:dim(all.df)[1],inds_updated)
+v = params$v[which(params$type==types[length(types)])]
+w = params$w[which(params$type==types[length(types)])]
+ac = AC_interested[ind.tmp]
+an = AN_interested[ind.tmp]
+post_params <- get_posterior_w_v(ac,an/2,w,v)
+posterior_param[ind.tmp,1]<- post_params[[1]]
+posterior_param[ind.tmp,2]<- post_params[[2]]
+af_changed_tmp <- pre_w_v_plugged(v,w,an/2,ac)
+af_changed[ind.tmp] <- af_changed_tmp
+
 
 
 mu <- get_mean_normal(posterior_param$v[which(posterior_param$w!=0)],posterior_param$w[which(posterior_param$w!=0)])
