@@ -81,7 +81,7 @@ all.df <- df[which(df$patheo.info==1),]
 na2num <- function(dat,colnm){
     ind <- which(colnames(dat)==colnm)
     dat[which(is.na(dat[,ind])),ind] = 0
-    return dat
+    return(dat)
 }
 
 
