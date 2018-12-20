@@ -77,10 +77,10 @@ extract.infor <- function(info.col,values,gene_name){
 data <- read.table(args[6],header=F,stringsAsFactors=F)
 gene_symbol <- args[7]
 # information that we want to extract
-values <- c("AC","AN","AF","AC_FIN","AC_NFE","AN_FIN","AN_NFE","Annotation")
+values <- c("AC","AN","AF","AC_FIN","AC_NFE","AC_ASJ","AC_AFR","AC_EAS","AN_FIN","AN_NFE","AN_ASJ","AN_AFR","AN_EAS","Annotation")
 info <- extract.infor(data[,8],values,gene_symbol)
 result <- data.frame(data[,-8],info)
-colnames(result) <- c("CHROM","POS","ID","REF","ALT","QUAL","FILTER","Allele.Count","Allele.Number","Allele.Frequency","AC_FIN","AC_NFE","AN_FIN","AN_NFE","Annotation")
+colnames(result) <- c("CHROM","POS","ID","REF","ALT","QUAL","FILTER","Allele.Count","Allele.Number","Allele.Frequency","AC_FIN","AC_NFE","AC_ASJ","AC_AFR","AC_EAS","AN_FIN","AN_NFE","AN_ASJ","AN_AFR","AN_EAS","Annotation")
 
 # output the result
 write.table(result,file=args[8],col.names=T,row.names=F,quote=F,sep="\t")
