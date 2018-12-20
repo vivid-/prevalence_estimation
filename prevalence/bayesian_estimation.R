@@ -77,6 +77,13 @@ types = c("frameshift_variant","splice_acceptor_variant","splice_donor_variant",
 # only focused on the variants annotated as pathogenic
 all.df <- df[which(df$patheo.info==1),]
 
+# deal with NAs for AC or AN columns
+na2num <- function(dat,colnm){
+    ind <- which(colnames(dat)==colnm)
+    dat[which(is.na(dat[,ind])),ind] = 0
+    return dat
+}
+
 
 # deal with NAs for AC or AN columns
 all.df$AC_FIN.genome[which(is.na(all.df$AC_FIN.genome))] = 0
@@ -88,6 +95,19 @@ all.df$AC_NFE.genome[which(is.na(all.df$AC_NFE.genome))] = 0
 all.df$AN_NFE.genome[which(is.na(all.df$AN_NFE.genome))] = 0
 all.df$AC_NFE.exome[which(is.na(all.df$AC_NFE.exome))] = 0
 all.df$AN_NFE.exome[which(is.na(all.df$AN_NFE.exome))] = 0
+all.df <- na2num(all.df,"AC_ASJ.genome")
+all.df <- na2num(all.df,"AC_AFR.genome")
+all.df <- na2num(all.df,"AC_EAS.genome")
+all.df <- na2num(all.df,"AN_ASJ.genome")
+all.df <- na2num(all.df,"AN_AFR.genome")
+all.df <- na2num(all.df,"AN_EAS.genome")
+all.df <- na2num(all.df,"AC_ASJ.exome")
+all.df <- na2num(all.df,"AC_AFR.exome")
+all.df <- na2num(all.df,"AC_EAS.exome")
+all.df <- na2num(all.df,"AN_ASJ.exome")
+all.df <- na2num(all.df,"AN_AFR.exome")
+all.df <- na2num(all.df,"AN_EAS.exome")
+
 
 ##########
 
@@ -109,6 +129,20 @@ if(population == "All"){
 	AC_interested <- all.df$Allele.Count
 	AN_interested <- all.df$Allele.Number
 }
+if(population == "ASJ"){
+        AC_interested <- all.df$AC_ASJ.exome + all.df$AC_ASJ.genome
+        AN_interested <- all.df$AN_ASJ.exome + all.df$AN_ASJ.genome
+}
+if(population == "AFR"){
+        AC_interested <- all.df$AC_AFR.exome + all.df$AC_AFR.genome
+        AN_interested <- all.df$AN_AFR.exome + all.df$AN_AFR.genome
+}
+if(population == "EAS"){
+        AC_interested <- all.df$AC_EAS.exome + all.df$AC_EAS.genome
+        AN_interested <- all.df$AN_EAS.exome + all.df$AN_EAS.genome
+}
+
+
 
 
 af_changed <- rep(0,dim(all.df)[1])
