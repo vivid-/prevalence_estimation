@@ -11,6 +11,6 @@ wget ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/archive_2.0/2018/clinvar_
 #wget ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/${clinvar}.vcf.gz.tbi
 
 # extract variants based on their locations
-tabix ${clinvar}.vcf.gz ${chr}:${sta}-${end} > ../data/clinvar_${chr}_${sta}-${end}_${gene}.vcf
+tabix clinvar_20180429.vcf.gz ${chr}:${sta}-${end} > ../data/clinvar_${chr}_${sta}-${end}_${gene}.vcf
 Rscript extract_patho_annotation.R ../data/clinvar_${chr}_${sta}-${end}_${gene}.vcf ../data/clinvar_${chr}_${sta}-${end}_${gene}_info.table
 
