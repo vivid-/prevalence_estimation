@@ -2,7 +2,7 @@ chr="$1"
 sta="$2"
 end="$3"
 gene="$4"
-clinvar="$5"
+#clinvar="$5"
 # fecth clinvar database file
 # clinvar_20180429
 #wget ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/${clinvar}.vcf.gz
