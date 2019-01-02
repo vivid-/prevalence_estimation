@@ -1,5 +1,12 @@
 # Estimating prevalences for monogenic autosomic recessive diseases
-Complete version of prevalence estimation
+Estimating prevalence for limb-girdle muscular dystrophy based on public sequencing databases, see https://www.biorxiv.org/content/early/2018/12/20/502708 for more method details.
+
+To replicate results presented in the manuscript above, please run the script after installation of all required libraries 
+```bash
+$ sh run_replicate.sh [chr] [start] [end] [gene_symbol] [confidence level]
+# for example
+$ sh run_replicate.sh 2 71680852 71913898 DYSF 0.95
+```
 
 ## Install required libraries
 We are using `R version 3.4.1` and `python 2.7.11` here. 
@@ -24,3 +31,6 @@ $ sh run.sh [chr] [start] [end] [gene_symbol] [confidence level]
 $ sh run.sh 2 71680852 71913898 DYSF 0.95
 ```
 For more detailed computation steps, please go to `details.md` file.
+
+## Pre-computed results
+For convinience, you can find the pre-computed files under the `data` directory and directly run the step `Estimate prevalences for diseases of interests` in the `details.md` file.
