@@ -14,7 +14,7 @@ url_gene = 'http://www.egl-eurofins.com/emvclass/emvclass.php?approved_symbol=' 
 # fetch the page
 page = urllib2.urlopen(url_gene)
 # parge the webpage html
-soup = BeautifulSoup(page,'html.parser')
+soup = BeautifulSoup(page,'html5lib')
 
 # firstly, find contents with td tags
 tb = soup.find_all('td')
