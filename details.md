@@ -18,9 +18,9 @@ python ./fetch_database/convert_HGVS.py --inpu ../DYSF_EGL.txt --out DYSF_EGL_lo
 For ClinVar database, we would extract the annotation information from the ClinVar database
 ```bash
 # download the databse
-sh ./fetch_database/extract_clinvar.sh [CHR] [START] [STOP] [GENE]
+sh ./fetch_database/extract_clinvar.sh [CHR] [START] [STOP] [GENE] [CliVar version]
 ## for example:
-sh ./fetch_database/extract_clinvar.sh 2 71680852 71913898 DYSF
+sh ./fetch_database/extract_clinvar.sh 2 71680852 71913898 DYSF 20190102
 ```
 
 Merge two database files
