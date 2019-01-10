@@ -10,7 +10,9 @@ result_dir <- args[6] # directory of the input estimated prevalence files
 input_pattern <- args[7]
 output_file <- args[8]
 confidence <- as.numeric(args[9])
+method <- args[10]
 
+input_pattern <- paste0(gene,"_*_",method)
 result_files <- list.files(result_dir,pattern=input_pattern)
 
 result_df <- data.frame()
