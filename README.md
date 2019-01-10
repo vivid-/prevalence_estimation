@@ -1,7 +1,7 @@
 # Estimating prevalences for monogenic autosomic recessive diseases
 Estimating prevalence for limb-girdle muscular dystrophy based on public sequencing databases, see https://www.biorxiv.org/content/early/2018/12/20/502708 for more method details.
 
-To replicate results presented in the manuscript above, please run the script after installation of all required libraries 
+To replicate results presented in the manuscript above (which used the clinvar database updated in 20180429), please run the script after installation of all required libraries 
 ```bash
 $ sh run_replicate.sh [chr] [start] [end] [gene_symbol] [confidence level]
 # for example
@@ -26,9 +26,10 @@ Besides, you need to have [tabix](http://wiki.wubrowse.org/How_to_install_tabix)
 ## Disease prevalence estimation
 For a autosomal recessive disease whose causal gene is known, we can use the following script to estimate its disease prevalence in different populations. Only European (EUR), Finnish (FIN), Non-Finnish European (NFE) and all population in gnomAD data are supported now.
 ```bash
-$ sh run.sh [chr] [start] [end] [gene_symbol] [confidence level]
+$ sh run.sh [chr] [start] [end] [gene_symbol] [confidence level] [ the most updated clinvar version]
+# please go to [ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/](ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/) for the most updated clinvar database version
 # for example
-$ sh run.sh 2 71680852 71913898 DYSF 0.95
+$ sh run.sh 2 71680852 71913898 DYSF 0.95 clinvar_20190108
 ```
 For more detailed computation steps, please go to `details.md` file.
 
