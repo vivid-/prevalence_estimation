@@ -9,7 +9,11 @@ clinvar="$5"
     wget ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/${clinvar}.vcf.gz
     wget ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/${clinvar}.vcf.gz.tbi
 }||{
-    echo "the input for clivar version is not updated, go to the website ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/"
+    wget ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/archive_2.0/2018/${clinvar}.vcf.gz
+    wget ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/archive_2.0/2018/${clinvar}.vcf.gz.tbi
+#    echo "the input for clivar version is not updated, go to the website ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/"
+}||{
+    echo "the input for clivar version is not correct, go to the website ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/ or ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/archive_2.0/2018" 
 }
 # extract variants based on their locations
 tabix ${clinvar}.vcf.gz ${chr}:${sta}-${end} > ../data/clinvar_${chr}_${sta}-${end}_${gene}.vcf
