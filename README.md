@@ -31,7 +31,7 @@ $ sh run.sh [chr] [start] [end] [gene_symbol] [confidence level] [ the most upda
 # for example
 $ sh run.sh 2 71680852 71913898 DYSF 0.95 clinvar_20190108
 or
-$ sh run.sh 2 71680852 71913898 DYSF 0.95 archive_2.0/2018/ clivar_20180429
+$ sh run.sh 2 71680852 71913898 DYSF 0.95 archive_2.0/2018 clivar_20180429
 ```
 For more detailed computation steps, please go to `details.md` file.
 
