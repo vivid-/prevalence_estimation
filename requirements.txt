@@ -2,3 +2,4 @@ hgvs==1.1.2
 pandas==0.19.2
 bs4==0.0.1
 vcf-parser==1.6
+html5lib==0.11.1
