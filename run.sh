@@ -69,3 +69,5 @@ Rscript ./prevalence/direct_calculation.R ./data/${gene}_mutation_AF_patho.txt E
 Rscript ./prevalence/direct_calculation.R ./data/${gene}_mutation_AF_patho.txt ASJ ./result/${gene}_ASJ_direct_calculation.txt
 Rscript ./prevalence/direct_calculation.R ./data/${gene}_mutation_AF_patho.txt AFR ./result/${gene}_AFR_direct_calculation.txt
 
+# summarize all results
+Rscript ./deal_result/result2df.R ./result/ ${gene} ./result/${gene}_${cfs}.txt ${cfs}
