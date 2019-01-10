@@ -1,10 +1,23 @@
-chr=$1
-sta=$2
-end=$3
-gene=$4
-# confidence score
-cfs=$5
-clinvar=$6 # like clinvar_20181028
+if [ "$#" -eq 6 ]; then
+  chr=$1
+  sta=$2
+  end=$3
+  gene=$4
+  # confidence score
+  cfs=$5
+  clinvar=$6 # like clinvar_20181028
+fi
+
+if [ "$#" -eq 7 ]; then
+  chr=$1
+  sta=$2
+  end=$3
+  gene=$4
+  # confidence score
+  cfs=$5
+  clinvar_loc=$6
+  clinvar=$7 # like clinvar_20181028
+fi
 
 # Downlad pathogenicity annotation from mutation database
 mkdir ./result
@@ -17,7 +30,13 @@ python ./fetch_database/convert_HGVS.py --inpu ./data/${gene}_EGL.txt --out ./da
 
 ## For ClinVar databse
 ### download the databse from clinvar
-cd ./fetch_database/;sh extract_clinvar.sh ${chr} ${sta} ${end} ${gene} ${clinvar}
+if [ "$#" -eq 6 ]; then
+  cd ./fetch_database/;sh extract_clinvar.sh ${chr} ${sta} ${end} ${gene} ${clinvar}
+fi
+
+if [ "$#" -eq 7 ]; then
+  cd ./fetch_database/;sh extract_clinvar.sh ${chr} ${sta} ${end} ${gene} ${clinvar_loc} ${clinvar}
+fi
 
 cd ..
 ## merge two databases
