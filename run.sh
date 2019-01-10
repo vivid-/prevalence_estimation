@@ -80,6 +80,10 @@ Rscript ./prevalence/bayesian_estimation.R ./data/${gene}_mutation_AF_patho.txt 
 Rscript ./prevalence/bayesian_estimation.R ./data/${gene}_mutation_AF_patho.txt ./data/beta_parameter_prior_ExAC.txt EAS ${cfs} ./result/${gene}_EAS_${cfs}.txt
 Rscript ./prevalence/bayesian_estimation.R ./data/${gene}_mutation_AF_patho.txt ./data/beta_parameter_prior_ExAC.txt ASJ ${cfs} ./result/${gene}_ASJ_${cfs}.txt
 Rscript ./prevalence/bayesian_estimation.R ./data/${gene}_mutation_AF_patho.txt ./data/beta_parameter_prior_ExAC.txt AFR ${cfs} ./result/${gene}_AFR_${cfs}.txt
+# summarize all results
+Rscript ./deal_result/result2df.R ./result/ ${gene} ./result/${gene}_${cfs}_bayesian.txt ${cfs} ${cfs}
+
+
 Rscript ./prevalence/direct_calculation.R ./data/${gene}_mutation_AF_patho.txt All ./result/${gene}_All_direct_calculation.txt
 Rscript ./prevalence/direct_calculation.R ./data/${gene}_mutation_AF_patho.txt NFE ./result/${gene}_NFE_direct_calculation.txt
 Rscript ./prevalence/direct_calculation.R ./data/${gene}_mutation_AF_patho.txt FIN ./result/${gene}_FIN_direct_calculation.txt
@@ -88,5 +92,4 @@ Rscript ./prevalence/direct_calculation.R ./data/${gene}_mutation_AF_patho.txt E
 Rscript ./prevalence/direct_calculation.R ./data/${gene}_mutation_AF_patho.txt ASJ ./result/${gene}_ASJ_direct_calculation.txt
 Rscript ./prevalence/direct_calculation.R ./data/${gene}_mutation_AF_patho.txt AFR ./result/${gene}_AFR_direct_calculation.txt
 
-# summarize all results
-Rscript ./deal_result/result2df.R ./result/ ${gene} ./result/${gene}_${cfs}.txt ${cfs}
+
