@@ -131,14 +131,20 @@ if(population == "All"){
 }
 if(population == "ASJ"){
         AC_interested <- all.df$AC_ASJ.exome + all.df$AC_ASJ.genome
+	all.df <- all.df[which(AC_interested!=0),]
+        AC_interested <- AC_interested[which(AC_interested!=0)]
         AN_interested <- all.df$AN_ASJ.exome + all.df$AN_ASJ.genome
 }
 if(population == "AFR"){
         AC_interested <- all.df$AC_AFR.exome + all.df$AC_AFR.genome
+	all.df <- all.df[which(AC_interested!=0),]
+        AC_interested <- AC_interested[which(AC_interested!=0)]
         AN_interested <- all.df$AN_AFR.exome + all.df$AN_AFR.genome
 }
 if(population == "EAS"){
         AC_interested <- all.df$AC_EAS.exome + all.df$AC_EAS.genome
+	all.df <- all.df[which(AC_interested!=0),]
+        AC_interested <- AC_interested[which(AC_interested!=0)]
         AN_interested <- all.df$AN_EAS.exome + all.df$AN_EAS.genome
 }
 
