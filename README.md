@@ -27,9 +27,11 @@ Besides, you need to have [tabix](http://wiki.wubrowse.org/How_to_install_tabix)
 For a autosomal recessive disease whose causal gene is known, we can use the following script to estimate its disease prevalence in different populations. Only European (EUR), Finnish (FIN), Non-Finnish European (NFE) and all population in gnomAD data are supported now.
 ```bash
 $ sh run.sh [chr] [start] [end] [gene_symbol] [confidence level] [ the most updated clinvar version]
-# please go to ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/ for the most updated clinvar database version
+# please go to ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/ for the most updated clinvar database version or the archived version in 2018 (ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/archive_*/20XX/)
 # for example
 $ sh run.sh 2 71680852 71913898 DYSF 0.95 clinvar_20190108
+or
+$ sh run.sh 2 71680852 71913898 DYSF 0.95 archive_2.0/2018/ clivar_20180429
 ```
 For more detailed computation steps, please go to `details.md` file.
 
