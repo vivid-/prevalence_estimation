@@ -59,8 +59,8 @@ Rscript ./extract_AF/merge_mutation_AF.R ./data/${gene}_mutation_miniR.txt ./dat
 
 # Estimate beta paramters for AF priors
 ## categorize variants
-#wget ftp://ftp.broadinstitute.org/pub/ExAC_release/release1/manuscript_data/ExAC.r1.sites.vep.canonical.table.gz
-#wget ftp://ftp.broadinstitute.org/pub/ExAC_release/release1/manuscript_data/ExAC.r1.sites.vep.canonical.table.gz.tbi
+#wget ftp://ftp.broadinstitute.org/pub/ExAC_release/release0.3.1/manuscript_data/ExAC.r0.3.1.sites.vep.canonical.table.gz
+#wget ftp://ftp.broadinstitute.org/pub/ExAC_release/release0.3.1/manuscript_data/ExAC.r0.3.1.sites.vep.canonical.table.gz.tbi
 #Rscript ./prior_estimation/empirical_beta.R ExAC.r0.3.1.sites.vep.canonical.table.gz ExAC.r0.3.1.sites.vep.canonical
 ## get the estimated beta priors for each category
 #Rscript ./prior_estimation/get_beta_parameters.R ExAC.r0.3.1.sites.vep.canonical_ ./data/beta_parameter_prior_ExAC.txt
