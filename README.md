@@ -42,6 +42,18 @@ CHROM   POS     REF     ALT     ID      AN      AN_Adj  AC      AC_Adj  type
 1       69428   T       G       rs140739101     99358   80618   2141    1985    exon_variant_20larger
 1       69590   T       A       rs141776804     93836   83862   110     103     exon_variant_20larger
 ```
+The detailed calculation is as follows:
+```R
+# calculate the distribution priors for each category
+$ Rscript prior_estimation/get_beta_parameters_flexible.R [category input file] [prior output file]
+# for example
+$ Rscript prior_estimation/get_beta_parameters_flexible.R ExAC_cates.txt ExAC_priors.txt
+
+# calculate disease prevalence using the different priors
+$ Rscript prevalence/bayesian_estimation_flexible.R [gene_alleleFrequeny_pathogeneicityAnnotation file] [prior file] [population] [category input file] [gene chromosome] [confidence level] [output result file]
+$ Rscript prevalence/bayesian_estimation_flexible.R ./data/CAPN3_mutation_AF_patho.txt ExAC_priors.txt All ExAC_cates.txt 7 0.95 ./result/CAPN3_All_0.95.txt
+```
+
 
 
 ## Pre-computed results
