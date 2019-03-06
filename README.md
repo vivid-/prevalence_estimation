@@ -43,7 +43,7 @@ CHROM   POS     REF     ALT     ID      AN      AN_Adj  AC      AC_Adj  type
 1       69590   T       A       rs141776804     93836   83862   110     103     exon_variant_20larger
 ```
 The detailed calculation is as follows:
-```R
+```bash
 # calculate the distribution priors for each category
 $ Rscript prior_estimation/get_beta_parameters_flexible.R [category input file] [prior output file]
 # for example
